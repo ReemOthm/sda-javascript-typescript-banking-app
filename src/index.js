@@ -78,13 +78,37 @@ class Branch{
     }
 }
 
-const branch = new Branch('branchName1');
-console.log(branch.getName())
-console.log(branch.addCustomer('reem',2));
-console.log(branch.addCustomer('reem8',2));
-console.log(branch.getCustomers())
-console.log(branch.addCustomerTransaction(2,600));
-console.log(branch.getCustomers()[0].transactions[0]);
-
-
-
+class Bank{
+    constructor(name){
+        this.name = name;
+        this.branches = []
+    }
+    addBranch(branchName){
+        if(this.branches.length > 0){
+            let checkBranch = '';
+            this.branches.forEach(branch=>{
+                if(branch.name === branchName)
+                checkBranch = `The Branch name is exsist, try a new name`
+            });
+            if(checkBranch != ""){
+                return checkBranch;
+            }else {
+                const branch = new Branch(branchName);
+                const check = this.branches.push(branch)
+                return check > 0 ? true : false;
+            }
+        }
+        const branch = new Branch(branchName);
+        const check = this.branches.push(branch)
+        return check > 0 ? true : false;
+    }
+    addCustomer(branchName, customer){
+        let check;
+        this.branches.forEach(branch=>{
+            if(branch.name === branchName){
+                check = branch.addCustomer(customer.name,customer.id);
+            }
+        })
+        return check;
+    }
+}
