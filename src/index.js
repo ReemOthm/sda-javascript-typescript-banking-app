@@ -37,14 +37,54 @@ class Customer {
 
 }
 
-const customer1 = new Customer('Reem', 20);
-console.log(customer1.getName())
-console.log(customer1.getId())
-console.log(customer1.addTransaction(200))
-console.log(customer1.addTransaction(500))
-console.log(customer1.addTransaction(-20))
-console.log(customer1.addTransaction(-700))
-console.log(customer1.getTransactions())
-console.log(customer1.getBalance())
+class Branch{
+    constructor(name){
+        this.name = name;
+        this.customers = []
+    }
+    getName(){
+        return this.name;
+    }
+    getCustomers(){
+        return this.customers;
+    }
+    addCustomer(name, id){
+        if(this.customers.length > 0){
+            let checkCustomer = '';
+            this.customers.forEach(customer=>{
+                if(customer.id === id)
+                checkCustomer = `This Customer is already has been added`
+            });
+            if(checkCustomer != ""){
+                return checkCustomer;
+            }else {
+                const customer = new Customer(name,id);
+                const check = this.customers.push(customer)
+                return check > 0 ? true : false;
+            }
+        }
+        const customer = new Customer(name,id);
+        const check = this.customers.push(customer)
+        return check > 0 ? true : false;
+    }
+    addCustomerTransaction(customerId, amount){
+        let check;
+        this.customers.forEach(customer=>{
+            if(customer.id === customerId){
+                check = customer.addTransaction(amount);
+            }
+        })
+        return check;
+    }
+}
+
+const branch = new Branch('branchName1');
+console.log(branch.getName())
+console.log(branch.addCustomer('reem',2));
+console.log(branch.addCustomer('reem8',2));
+console.log(branch.getCustomers())
+console.log(branch.addCustomerTransaction(2,600));
+console.log(branch.getCustomers()[0].transactions[0]);
+
 
 
