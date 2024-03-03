@@ -1,27 +1,37 @@
+import Branch from "./Branch";
+import Customer from "./Customer";
+
 class Bank{
-    constructor(name){
+    name: string;
+    branches: Branch[];
+    constructor(name:string){
         this.name = name.trim();
         this.branches = [];
     }
-    addBranch(branch){
+    addBranch(branch:Branch):boolean{
         if(!this.branches.includes(branch)){
-            const result = this.branches.push(branch);
-            return result > 0 ? `${branch.name} has added Successfully!` : false;
+            const result:number = this.branches.push(branch);
+            return result > 0 ? true : false;
         }
-        else return `Branch has already exist!`;
+        else return false;
     }
-    addCustomer(branch, customer){
+    addCustomer(branch:Branch, customer:Customer):boolean{
         if(this.branches.includes(branch)){
-            let checkCustomer=0, branchName= '' ;
+            let checkCustomer:number=0, branchName:string= '' ;
             this.branches.forEach(branch => {
                 if(branch.customers.includes(customer))
                     checkCustomer++
                     branchName = branch.name;
             });
-            return checkCustomer === 0 ? branch.addCustomer(customer) : `Failed to add! Customer ${customer.name} has already been added to ${branchName}`;
+            if(checkCustomer === 0){
+                branch.addCustomer(customer);
+                return true;
+            } 
+            else return false;
         }
+        else return false
     }
-    addCustomerTransaction(branch, customerId, amount){
+    addCustomerTransaction(branch:Branch, customerId:number, amount:number): boolean | undefined{
         if(amount === 0 ){
             console.log(`please enter an amount greater than 0!`);
             return;
@@ -32,14 +42,14 @@ class Bank{
         }
         else return false;
     }
-    findBranchByName(branchName){
-        const result = this.branches.find(branch=> branch.name === branchName);
-        return result !== undefined ? `${result.name} has found` : `branch name has not found, try another name`;
+    findBranchByName(branchName:string):boolean{
+        const result:Branch | undefined = this.branches.find(branch=> branch.name === branchName);
+        return result !== undefined ? true : false;
     }
-    checkBranch(branch){
+    checkBranch(branch:Branch):boolean{
         return this.branches.includes(branch);
     }
-    listCustomers(branch, includeTransactions){
+    listCustomers(branch:Branch, includeTransactions:boolean):void{
         if(this.checkBranch(branch)){
             if(includeTransactions){
                 console.log(`Branch: ${branch.getName()},\nCustomers: ${branch.getCustomers().length}`);

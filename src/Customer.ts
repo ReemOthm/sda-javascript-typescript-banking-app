@@ -1,28 +1,31 @@
 import Transaction from './Transaction.js';
 
 class Customer {
-    constructor(name,id){
+    name: string;
+    id: number;
+    transactions: Transaction[];
+    constructor(name:string,id:number){
         this.name = name.trim();
         this.id = id;
         this.transactions = []
     }
-    getName(){
+    getName():string{
         return this.name;
     }
-    getId(){
+    getId():number{
         return this.id;
     }
-    getTransactions(){
+    getTransactions():Transaction[]{
         return this.transactions;
     }
-    getBalance(){
+    getBalance():number{
         return this.transactions.reduce((total, transaction)=>{
             return total + transaction.amount;
         },0)
     }
-    addTransactions(amount){
+    addTransactions(amount:number):boolean{
         const transaction = new Transaction(amount);
-        const check = this.transactions.push(transaction)
+        const check:number = this.transactions.push(transaction)
         return check > 0 ? true : false;
     }
 }
