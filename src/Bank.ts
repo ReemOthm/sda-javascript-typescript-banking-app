@@ -17,24 +17,15 @@ class Bank{
     }
     addCustomer(branch:Branch, customer:Customer):boolean{
         if(this.branches.includes(branch)){
-            let checkCustomer:number=0, branchName:string= '' ;
-            this.branches.forEach(branch => {
-                if(branch.customers.includes(customer))
-                    checkCustomer++
-                    branchName = branch.name;
-            });
-            if(checkCustomer === 0){
-                branch.addCustomer(customer);
-                return true;
-            } 
+            branch.addCustomer(customer);
+            return true;
+        } 
             else return false;
-        }
-        else return false
     }
-    addCustomerTransaction(branch:Branch, customerId:number, amount:number): boolean | undefined{
+    addCustomerTransaction(branch:Branch, customerId:number, amount:number): boolean{
         if(amount === 0 ){
             console.log(`please enter an amount greater than 0!`);
-            return;
+            return false;
         }
         if(this.checkBranch(branch)){
             branch.addCustomerTransaction(customerId,amount);

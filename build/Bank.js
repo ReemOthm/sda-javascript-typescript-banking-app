@@ -15,18 +15,8 @@ class Bank {
     }
     addCustomer(branch, customer) {
         if (this.branches.includes(branch)) {
-            let checkCustomer = 0, branchName = '';
-            this.branches.forEach(branch => {
-                if (branch.customers.includes(customer))
-                    checkCustomer++;
-                branchName = branch.name;
-            });
-            if (checkCustomer === 0) {
-                branch.addCustomer(customer);
-                return true;
-            }
-            else
-                return false;
+            branch.addCustomer(customer);
+            return true;
         }
         else
             return false;
@@ -34,7 +24,7 @@ class Bank {
     addCustomerTransaction(branch, customerId, amount) {
         if (amount === 0) {
             console.log(`please enter an amount greater than 0!`);
-            return;
+            return false;
         }
         if (this.checkBranch(branch)) {
             branch.addCustomerTransaction(customerId, amount);

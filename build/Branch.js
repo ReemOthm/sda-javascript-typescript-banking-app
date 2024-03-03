@@ -22,7 +22,7 @@ class Branch {
     addCustomerTransaction(customerId, amount) {
         if (amount === 0) {
             console.log(`please enter an amount greater than 0!`);
-            return;
+            return false;
         }
         const customer = this.customers.find(customer => customer.id === customerId);
         if (customer) {

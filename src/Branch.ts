@@ -20,10 +20,10 @@ class Branch{
         }
         else return false
     }
-    addCustomerTransaction(customerId:number, amount:number):boolean | undefined{
+    addCustomerTransaction(customerId:number, amount:number):boolean{
         if(amount === 0 ){
             console.log(`please enter an amount greater than 0!`);
-            return;
+            return false;
         }
         const customer:Customer | undefined =  this.customers.find(customer=> customer.id === customerId);
         if(customer){
