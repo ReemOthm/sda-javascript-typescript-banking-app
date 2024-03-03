@@ -1,13 +1,13 @@
 class Transaction{
     constructor(amount){
-        this.amount = amount;
+        this.amount = Number(amount);
         this.date = new Date();
     }
 }
 
 class Customer {
     constructor(name,id){
-        this.name = name;
+        this.name = name.trim();
         this.id = id;
         this.transactions = []
     }
@@ -35,7 +35,7 @@ class Customer {
 
 class Branch{
     constructor(name){
-        this.name = name;
+        this.name = name.trim();
         this.customers = []
     }
     getName(){
@@ -51,6 +51,10 @@ class Branch{
         }
     }
     addCustomerTransaction(customerId, amount){
+        if(amount === 0 ){
+            console.log(`please enter an amount greater than 0!`);
+            return;
+        }
         const customer =  this.customers.find(customer=> customer.id === customerId);
         if(customer){
             customer.addTransactions(amount);
@@ -62,7 +66,7 @@ class Branch{
 
 class Bank{
     constructor(name){
-        this.name = name;
+        this.name = name.trim();
         this.branches = [];
     }
     addBranch(branch){
@@ -84,6 +88,10 @@ class Bank{
         }
     }
     addCustomerTransaction(branch, customerId, amount){
+        if(amount === 0 ){
+            console.log(`please enter an amount greater than 0!`);
+            return;
+        }
         if(this.checkBranch(branch)){
             branch.addCustomerTransaction(customerId,amount);
             return true;
@@ -140,6 +148,7 @@ console.log(arizonaBank.addCustomer(sunBranch, customer2));
 
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
+arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 0);
 arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
 
 customer1.addTransactions(-1000);
