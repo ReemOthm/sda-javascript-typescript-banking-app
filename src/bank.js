@@ -30,7 +30,6 @@ class Customer {
         const check = this.transactions.push(transaction)
         return check > 0 ? true : false;
     }
-
 }
 
 class Branch{
@@ -61,6 +60,12 @@ class Branch{
             return true;
         }
         else return false;
+    }
+    searchCustomer(customerInput){
+        const targetCustomer = this.getCustomers().find(customer=>{
+            return customer.id === customerInput || customer.name === customerInput 
+        })
+        return `Customer Name: ${targetCustomer.getName()}, Customer ID: ${targetCustomer.getId()}`;
     }
 }
 
@@ -155,3 +160,5 @@ customer1.addTransactions(-1000);
 console.log(customer1.getBalance());
 arizonaBank.listCustomers(westBranch, true);
 arizonaBank.listCustomers(sunBranch,true);
+
+console.log(sunBranch.searchCustomer(2))
